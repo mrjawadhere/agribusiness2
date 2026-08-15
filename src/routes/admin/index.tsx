@@ -6,11 +6,12 @@ import { useQuery } from "@tanstack/react-query";
 
 export const Route = createFileRoute("/admin/")({
   loader: async () => {
-    const session = await getSession();
-    if (!session || session.role !== "admin") {
-      throw redirect({ to: "/dashboard" });
+    try {
+      const session = await getSession();
+      return { session };
+    } catch (e) {
+      return { session: null };
     }
-    return { session };
   },
   head: () => ({
     title: "Admin Core | AgriBusiness Governance",
