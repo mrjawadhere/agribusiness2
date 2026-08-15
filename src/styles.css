@@ -1,0 +1,200 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Montserrat", ui-sans-serif, system-ui, sans-serif;
+
+  /* Rich Agri-Tech Palette (Lush Emerald & Harvest Amber Gold) */
+  --color-primary: #0a4d32;
+  --color-on-primary: #ffffff;
+  --color-primary-container: #063925;
+  --color-on-primary-container: #a7f3d0;
+  --color-primary-light: #10b981;
+  
+  --color-secondary: #d97706;
+  --color-on-secondary: #ffffff;
+  --color-secondary-container: #fef3c7;
+  --color-on-secondary-container: #78350f;
+  --color-secondary-light: #f59e0b;
+  
+  --color-background: #f8faf9;
+  --color-on-background: #0f172a;
+  
+  --color-surface: #ffffff;
+  --color-on-surface: #0f172a;
+  --color-surface-variant: #f1f5f2;
+  --color-on-surface-variant: #475569;
+  --color-surface-bright: #ffffff;
+  --color-surface-dim: #e2e8e4;
+  --color-surface-container-lowest: #ffffff;
+  --color-surface-container-low: #f4f7f5;
+  --color-surface-container: #eaf0ec;
+  --color-surface-container-high: #dfe7e2;
+  --color-surface-container-highest: #d3ded7;
+
+  --color-outline: #94a3b8;
+  --color-outline-variant: #e2e8f0;
+  
+  --color-error: #dc2626;
+  --color-on-error: #ffffff;
+  --color-success: #16a34a;
+
+  --radius-2xl: 1.25rem;
+  --radius-3xl: 1.75rem;
+  --radius-4xl: 2.25rem;
+  
+  /* Layout units */
+  --spacing-margin-desktop: 48px;
+  --spacing-margin-mobile: 16px;
+  --spacing-gutter: 20px;
+  --width-container-max: 1240px;
+
+  @keyframes ticker {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+
+  @keyframes shimmer {
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+  }
+
+  @keyframes bounce-slow {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-6px); }
+  }
+}
+
+@layer base {
+  :root {
+    --background: #f8faf9;
+    --foreground: #0f172a;
+    --card: #ffffff;
+    --card-foreground: #0f172a;
+    --popover: #ffffff;
+    --popover-foreground: #0f172a;
+    --primary: #0a4d32;
+    --primary-foreground: #ffffff;
+    --secondary: #d97706;
+    --secondary-foreground: #ffffff;
+    --muted: #f1f5f2;
+    --muted-foreground: #64748b;
+    --accent: #f59e0b;
+    --accent-foreground: #ffffff;
+    --destructive: #dc2626;
+    --destructive-foreground: #ffffff;
+    --border: #e2e8f0;
+    --input: #e2e8f0;
+    --ring: #0a4d32;
+    --radius: 0.875rem;
+  }
+
+  .dark {
+    --background: #061c14;
+    --foreground: #f8fafc;
+    --card: #0c3323;
+    --card-foreground: #f8fafc;
+    --popover: #0c3323;
+    --popover-foreground: #f8fafc;
+    --primary: #10b981;
+    --primary-foreground: #061c14;
+    --secondary: #f59e0b;
+    --secondary-foreground: #061c14;
+    --muted: #11422f;
+    --muted-foreground: #94a3b8;
+    --accent: #f59e0b;
+    --accent-foreground: #061c14;
+    --destructive: #ef4444;
+    --destructive-foreground: #f8fafc;
+    --border: #165b40;
+    --input: #165b40;
+    --ring: #10b981;
+  }
+
+  * {
+    border-color: var(--border);
+  }
+
+  body {
+    background-color: var(--background);
+    color: var(--foreground);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-display);
+    letter-spacing: -0.02em;
+  }
+
+  /* Urdu/RTL mode: Noto Nastaliq for body text */
+  [dir="rtl"] body {
+    font-family: "Noto Nastaliq Urdu", "Noto Naskh Arabic", var(--font-sans);
+  }
+
+  /* Accessible focus-visible ring */
+  :focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: 2px;
+    border-radius: 0.375rem;
+  }
+
+  /* Respect reduced-motion preference */
+  @media (prefers-reduced-motion: reduce) {
+    .animate-ticker { animation: none !important; }
+    * { 
+      animation-duration: 0.01ms !important; 
+      transition-duration: 0.01ms !important; 
+    }
+  }
+}
+
+@layer utilities {
+  .glass {
+    @apply bg-white/80 backdrop-blur-xl border border-white/30 shadow-lg shadow-black/5;
+  }
+  .glass-dark {
+    @apply bg-black/70 backdrop-blur-xl border border-white/10 shadow-xl shadow-black/20;
+  }
+  .premium-shadow {
+    box-shadow: 0 10px 30px -10px rgba(10, 77, 50, 0.08);
+  }
+  .card-hover {
+    @apply transition-all duration-300 hover:shadow-xl hover:-translate-y-1 hover:border-primary/30;
+  }
+
+  /* Ticker */
+  .animate-ticker {
+    animation: ticker 30s linear infinite;
+  }
+  .animate-ticker:hover {
+    animation-play-state: paused;
+  }
+
+  /* Bounce for floating UI elements */
+  .animate-bounce-slow {
+    animation: bounce-slow 3s ease-in-out infinite;
+  }
+
+  /* Skeleton shimmer */
+  .skeleton {
+    background: linear-gradient(
+      90deg,
+      #e2e8f0 25%,
+      #f1f5f9 50%,
+      #e2e8f0 75%
+    );
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+  }
+
+  /* Hide scrollbar (horizontal filter pills) */
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+}
